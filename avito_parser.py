@@ -7,15 +7,24 @@ import re
 def parse_avito_computer_parts_improved():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept-Language': 'ru-RU,ru;q=0.9,en;q=0.8',
-        'Referer': 'https://www.avito.ru/'
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Cache-Control': 'max-age=0'
     }
 
     url = "https://www.avito.ru/all/tovary_dlya_kompyutera/komplektuyuschie-ASgBAgICAUTGB~pm?d=1&s=104"
 
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        # Задержка перед запросом чтобы не блокировали
+        time.sleep(2)
+        response = requests.get(url, headers=headers, timeout=15)
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, 'html.parser')
